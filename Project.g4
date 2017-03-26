@@ -3,7 +3,7 @@ grammar Project;
 //tokens definition
 TYPE: 'int' | 'double'| 'float'|'char';
 ID : [a-zA-Z]+;
-NB : ([0-9]+ ','?)+;
+NB : [0-9]+ ','?;
 COMMENT : '//' .*? '\n' -> skip;
 WS : [ \r\n\t] -> skip;
 
@@ -14,7 +14,18 @@ include : '#include' '<'ID'>';
 namespace : 'using' 'namespace'ID';';
 
 main_function : TYPE 'main''('')''{'statements*'}';
-statements : try*;
+statements : try;
 try : 'try''{'(stmt';')+'}';
-stmt :
+
+stmt : TYPE ID
+     | ID '=' expr
+     | 'return' ID
+     | std 'vector''<'TYPE'>'ID'{'NB*'}'
+     | TYPE ID '{'ID'.''at''('NB')'
+     ;
+
+std : 'std''::';
+expr : expr ('+'|'-'|'/'|'*') expr
+     | ID
+     ;
 
