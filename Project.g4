@@ -1,6 +1,7 @@
 grammar Project;
 
 //tokens definition
+//TYPE of attributes or functions
 TYPE: 'int' | 'double'| 'float'|'char' |'vector';
 ID : ([a-zA-Z_&"-] | [\\] |[.])+;
 SC: [:]+;
@@ -36,7 +37,8 @@ stmt : TYPE ID
 
 std : 'std'SC;
 vect :  TYPE'<'TYPE'>'ID'{'NB*'}';
-expr : expr ('+'|'-'|'/'|'*') expr
+expr : expr ('+'|'-') expr
+     | expr ('/'|'*') expr
      | ID
      ;
 
